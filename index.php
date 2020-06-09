@@ -15,6 +15,17 @@
         $msg = 'ERREUR PDO dans ' . $e->getFile() . ' Ligne.' . $e->getLine() . ' : <br>' . $e->getMessage();
         die($msg);
         }
+
+        // $reponse = $bdd->query('SELECT * FROM table_1');
+        // while ($donnees = $reponse->fetch()){
+        //     echo '<p>' . $donnees['id'] . '</p>';
+
+        // }
+        $reponse = $bdd->query('SELECT * FROM table_1 WHERE last_name="palmer"');
+        while ($donnees = $reponse->fetch()){
+            echo '<p>' . $donnees['id'] . ' - ' . $donnees['last_name'] . '</p>';
+
+        }
     ?>
 </body>
 </html>
