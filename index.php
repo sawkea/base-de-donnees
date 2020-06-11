@@ -59,7 +59,7 @@
                         // tant que (variable données = la variable reponse elle va chercher et )
                         while ($donnees = $reponse->fetch()){
                         // affiche le nom de l'apprenant et celui du participant dans un tableau
-                        echo '<table class="flex"><td>' . $donnees['Nom'] . '</td>  <td>' . $donnees['nom_departement'] . '</td></table>';
+                        echo '<table><tr><td>' . $donnees['Nom'] . '</td>  <td>' . $donnees['nom_departement'] . '</td></tr></table>';
                         }
                     ?>
                 </div>
