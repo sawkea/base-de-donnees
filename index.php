@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>acs_besancon</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <?php
 
-
+    //connexion PDO distant
     $servername = "localhost";
     $username = "soniah";
     $password = "mW3SxOh6/3S+gQ==";
@@ -18,42 +19,54 @@
       $conn->exec('SET NAMES utf8');
       // set the PDO error mode to exception
       $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      echo "Connected successfully";
+    //   echo "Connected successfully";
     } catch(PDOException $e) {
       echo "Connection failed: " . $e->getMessage();
     }
 
 
+    // connexion PDO local
+    // $servername = "localhost";
+    // $username = "root";
+    // $password = "";
+    
     // try {
-    //     $bdd = new PDO('mysql:host=localhost;dbname=apprenants', 'root', '');
-    //     $bdd->exec('SET NAMES utf8');
-    //     var_dump ($bdd);    
-    // } catch (PDOException $e) {
-    //     $msg = 'ERREUR PDO dans ' . $e->getFile() . ' Ligne.' . $e->getLine() . ' : <br>' . $e->getMessage();
-    //     die($msg);
-    //     }
+    //   $conn = new PDO("mysql:host=$servername;dbname=apprenants", $username, $password);
+    //   // pour afficher les caractères spéciaux , accents
+    //   $conn->exec('SET NAMES utf8');
+    //   // affichage des erreurs de connexion du PDO
+    //   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    //   echo "Connected successfully";
+    // } 
+    // catch(PDOException $e) {
+    //   echo "Connection failed: " . $e->getMessage();
+    // }
 
+    // 
+    ?>
+        
+        <header>
+            <h1>ACS de besançon</h1>
+                <h2>Liste des apprenants et leur département <br> de résidence</h2>
+        </header>
+           
+            <main>
+                <div class="bdd">
+                    <?php
+                        // la variable réponse = variable conn (plus haut de la base de donnees dans phpmydamin) qui affiche le nom des apprenants ainsi que le nom de leur département
+                        // dans la table membres_acs et dans la table departements_acs avec leur colonne identique num_departement
+                        $reponse = $conn->query('SELECT Nom, nom_departement FROM membres_acs INNER JOIN departements_acs ON membres_acs.num_departement = departements_acs.num_departement');
+                        // tant que (variable données = la variable reponse elle va chercher et )
+                        while ($donnees = $reponse->fetch()){
+                        // affiche le nom de l'apprenant et celui du participant dans un tableau
+                        echo '<table class="flex"><td>' . $donnees['Nom'] . '</td>  <td>' . $donnees['nom_departement'] . '</td></table>';
+                        }
+                    ?>
+                </div>
+            </main>
+            <footer>
+                <p>Source : <em>Base de données ACS Besançon</em> - Sonia</p>
+            </footer>
 
-
-        // $reponse = $bdd->query('SELECT * FROM table_1');
-        // while ($donnees = $reponse->fetch()){
-        //     echo '<p>' . $donnees['id'] . '</p>';
-
-        // }
-        // $reponse = $bdd->query('SELECT * FROM table_1 WHERE last_name="palmer"');
-        // while ($donnees = $reponse->fetch()){
-        //     echo '<p>' . $donnees['id'] . ' - ' . $donnees['last_name'] . '</p>';
-
-        // }
-        echo "<h1>ACS de besançon</h1> 
-                <h2>Liste des apprenants et leur département de résidence</h2>";
-                
-            $reponse = $conn->query('SELECT Nom, nom_departement FROM membres_acs INNER JOIN departements_acs ON membres_acs.num_departement = departements_acs.num_departement');
-            while ($donnees = $reponse->fetch()){
-               echo '<p>' . $donnees['Nom'] . ' - ' . $donnees['nom_departement'] . '</p>';
-            }
-//         SELECT * FROM membres_acs INNER JOIN departements_acs ON membres_acs.num_departement = departements_acs.num_departement
-// SELECT Nom, nom_departement FROM membres_acs INNER JOIN departements_acs ON membres_acs.num_departement = departements_acs.num_departement
-?>
 </body>
 </html>
